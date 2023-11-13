@@ -5,7 +5,7 @@ import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import Test from "./pages/Test";
 import Splashscreen from "./pages/splashscreen";
-import image from "/image.png"
+import image from "./images/image.png";
 
 function App() {
   return (

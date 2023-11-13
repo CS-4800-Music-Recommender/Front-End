@@ -6,10 +6,10 @@ const Splashscreen = () => {
     <Container fluid className="p-5  text-dark text-center">
       <Row className="justify-content-between">
         <Col>
-          <Image src="/splashscreen/bpm-logo.png" fluid/>
+          <Image src="src\images\splashscreen\bpm-logo.png" fluid/>
         </Col>
         <Col>
-          <Image src="/splashscreen/line-art.png" fluid />
+          <Image src="src\images\splashscreen\line-art.png" fluid />
         </Col>
       </Row>
       <Row>
