@@ -1,15 +1,15 @@
-import "./App.css";
-import { Button } from "react-bootstrap";
+// import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import Test from "./pages/Test";
 import Splashscreen from "./pages/splashscreen";
+import image from "/image.png"
 
 function App() {
   return (
-    <>
+    <div style={{ backgroundImage: `url(${image})` , backgroundSize: "cover" , backgroundRepeat: "no-repeat" , height: "100vh", }}>
       <BrowserRouter>
         <Routes>
           <Route
@@ -22,7 +22,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
