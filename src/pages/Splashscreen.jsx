@@ -1,15 +1,16 @@
 import { Button, Col, Row, Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import logo from "../images/splashscreen/bpm-logo.png";
+import lineart from "../images/splashscreen/line-art.png";
 const Splashscreen = () => {
   return (
     <Container fluid className="p-5  text-dark text-center">
       <Row className="justify-content-between">
         <Col>
-          <Image src="src\images\splashscreen\bpm-logo.png" fluid/>
+          <Image src={logo} fluid/>
         </Col>
         <Col>
-          <Image src="src\images\splashscreen\line-art.png" fluid />
+          <Image src={lineart} fluid />
         </Col>
       </Row>
       <Row>

@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
 import Test from "./pages/Test";
-import Splashscreen from "./pages/splashscreen";
+import Splashscreen from "./pages/Splashscreen";
 import image from "./images/image.png";
 
 function App() {
