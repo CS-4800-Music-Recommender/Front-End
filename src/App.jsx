@@ -6,20 +6,25 @@ import { Route } from "react-router-dom";
 import Test from "./pages/Test";
 import Splashscreen from "./pages/Splashscreen";
 import image from "./images/image.png";
+import Login from "./pages/Login";
 
 function App() {
   return (
-    <div style={{ backgroundImage: `url(${image})` , backgroundSize: "cover" , backgroundRepeat: "no-repeat" , backgroundPosition: "center" , height: "100vh" }}>
+    <div
+      style={{
+        backgroundImage: `url(${image})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        height: "100vh",
+      }}
+    >
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={<Splashscreen/>}
-          />
-          <Route
-            path="/test"
-            element={<Test />}
-          />
+          <Route path="/" element={<Splashscreen />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/playlist" element={<Test />} />
         </Routes>
       </BrowserRouter>
     </div>
