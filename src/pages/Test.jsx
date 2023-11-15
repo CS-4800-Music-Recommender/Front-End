@@ -1,11 +1,28 @@
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 const Test = () => {
   return (
-    <div>
-      <h1>This is test screen</h1>
-      <Button variant="primary" as={Link} to="/">Main Page</Button>
-    </div>
+    <Container fluid className="p-5 text-center">
+      <Col>
+        <Row>
+          <h1 className="text-center fs-2 my-5">
+            This is a test screen that serves as a placeholder for any page not
+            completed yet
+          </h1>
+        </Row>
+      </Col>
+      <Col>
+        <Button
+          variant="outline-success"
+          size="lg"
+          as={Link}
+          to="/"
+          className="my-3 w-50 p-3 fs-1"
+        >
+          Back to splashscreen/main page
+        </Button>
+      </Col>
+    </Container>
   );
 };
 
