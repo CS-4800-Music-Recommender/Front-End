@@ -9,7 +9,7 @@ import image from "./images/image.png";
 
 function App() {
   return (
-    <div style={{ backgroundImage: `url(${image})` , backgroundSize: "cover" , backgroundRepeat: "no-repeat" , height: "100vh", }}>
+    <div style={{ backgroundImage: `url(${image})` , backgroundSize: "cover" , backgroundRepeat: "no-repeat" , backgroundPosition: "center" , height: "100vh" }}>
       <BrowserRouter>
         <Routes>
           <Route
