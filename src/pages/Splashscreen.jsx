@@ -19,7 +19,7 @@ const Splashscreen = () => {
             <Form.Group controlId="inputtedSong">
               <Form.Control
                 type="text"
-                placeholder="Enter a song to build a playlist with"
+                placeholder="Enter a song or an artist to build a playlist with"
                 size="lg"
               />
             </Form.Group>
@@ -27,10 +27,17 @@ const Splashscreen = () => {
               variant="success"
               type="submit"
               size="lg"
-              className="my-3 p-3 fs-3"
+              className="my-3 p-3 fs-3 mx-5"
             >
-              {/* Might delete this button, just in case if we need a search song button*/}
               Search Song
+            </Button>
+            <Button
+              variant="success"
+              type="submit"
+              size="lg"
+              className="my-3 p-3 fs-3 mx-5"
+            >
+              Search Artist
             </Button>
           </Form>
         </Col>
@@ -42,7 +49,7 @@ const Splashscreen = () => {
             size="lg"
             as={Link}
             to="/login"
-            className="my-3 w-50 p-3 fs-1"
+            className="my-3 p-3 fs-1 mx-5 w-50"
           >
             Login
           </Button>
@@ -53,7 +60,7 @@ const Splashscreen = () => {
             size="lg"
             as={Link}
             to="/test"
-            className="my-3 w-50 p-3 fs-1"
+            className="my-3 p-3 fs-1 mx-5 w-50"
           >
             Import
           </Button>
