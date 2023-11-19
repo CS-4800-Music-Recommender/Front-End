@@ -71,18 +71,54 @@ const PlaylistPage = () => {
           </Row>
         </Col>
         <Col>
-          <div className="text-center " style={{ width: "50%" }} id="playlist">
+          <div className="text-center " style={{ width: "80%", height: "500px" }}>
             <h1>Recommended Songs</h1>
             <ListGroup className="fs-5">
-              <ListGroup.Item action>
-                List Group Item 1
-              </ListGroup.Item>
-              <ListGroup.Item action>
-                List Group Item 2
-              </ListGroup.Item>
-              <ListGroup.Item action>
-                List Group Item 3
-              </ListGroup.Item>
+              <ListGroup.Item action>List Group Item 1</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 2</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 3</ListGroup.Item>
+            </ListGroup>
+          </div>
+        </Col>
+        <Col>
+          <div className="text-center " style={{ width: "80%" }}>
+            <h1>Current Playlist</h1>
+          </div>
+          <div
+            className="text-center overflow-auto"
+            style={{ width: "80%", height: "500px" }}
+          >
+            <ListGroup className="fs-5">
+              <ListGroup.Item action>List Group Item 1</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 2</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 3</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 4</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 5</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 6</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
             </ListGroup>
           </div>
         </Col>
