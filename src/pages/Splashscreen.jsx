@@ -59,7 +59,7 @@ const Splashscreen = () => {
             variant="success"
             size="lg"
             as={Link}
-            to="/test"
+            to="/playlist"
             className="my-3 p-3 fs-1 mx-5 w-50"
           >
             Import
