@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 
 const PlaylistPage = () => {
   const [accessToken, setAccessToken] = useState({});
+  const [searchBox, setSearchBox] = useState("");
+  const [playlist, setPlaylist] = useState([]);
   useEffect(() => {
     let authParams = {
       method: "POST",
@@ -42,7 +44,7 @@ const PlaylistPage = () => {
         Authorization: `Bearer ${accessToken}`,
       },
     };
-    let songID = await fetch(
+    await fetch(
       "https://api.spotify.com/v1/search?q=" + inputtedSong + "&type=track",
       songParams
     )
@@ -52,7 +54,16 @@ const PlaylistPage = () => {
       });
   }
 
-  search("90210");
+const handleInputChange = (event) => {
+  setSearchBox(event.target.value);
+}
+
+const handleSubmit = (event) => {
+  event.preventDefault();
+  setPlaylist(prevList => [...prevList, searchBox]);
+  setSearchBox('');
+}
+
   return (
     <Container fluid className="p-5 text-center ">
       <Row>
@@ -101,11 +112,13 @@ const PlaylistPage = () => {
                 placeholder="Search Song or Artist"
                 aria-label="Search Song or Artist"
                 aria-describedby="basic-addon2"
+                value={searchBox}
+                onChange={handleInputChange}
               />
               <Button variant="outline-secondary" id="button-addon2">
                 Artist
               </Button>
-              <Button variant="outline-secondary" id="button-addon2">
+              <Button variant="outline-secondary" id="button-addon2" onClick={handleSubmit}>
                 Song
               </Button>
             </InputGroup>
@@ -133,36 +146,10 @@ const PlaylistPage = () => {
             style={{ width: "80%", height: "500px" }}
           >
             <ListGroup className="fs-5">
-              <ListGroup.Item action>List Group Item 1</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 2</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 3</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 4</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 5</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 6</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 7</ListGroup.Item>
+              {playlist.map((song, key) => (
+              <ListGroup.Item key={key} action>{song}</ListGroup.Item>
+                
+              ))}
             </ListGroup>
           </div>
         </Col>
