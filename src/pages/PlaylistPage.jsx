@@ -154,6 +154,13 @@ const handleSubmit = (event) => {
           </div>
         </Col>
       </Row>
+      <Row className="bg-dark">
+        {/* Plans for here would be to fully develop the black bar part of the page,
+        the black bar will show the name of the song, the spotify url to the song, and a like and dislike button of some sort
+        the like button will add it to the current playlist, dislike will remove it from recommendations and not add it to current playlist
+        */}
+        <div style={{ width: "100%", height: "100px" }}></div>
+      </Row>
     </Container>
   );
 };
