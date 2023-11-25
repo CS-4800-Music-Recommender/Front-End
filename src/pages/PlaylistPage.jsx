@@ -10,8 +10,49 @@ import {
 import logo from "../images/splashscreen/bpm-logo.png";
 import { List } from "react-bootstrap-icons";
 import { ListGroup } from "react-bootstrap/esm";
+import { useEffect, useState } from "react";
 
 const PlaylistPage = () => {
+  const [accessToken, setAccessToken] = useState({});
+  useEffect(() => {
+    let authParams = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `grant_type=client_credentials&client_id=${
+        import.meta.env.VITE_SPOTIFY_API_CLIENT_ID
+      }&client_secret=${import.meta.env.VITE_SPOTIFY_API_CLIENT_SECRET}`,
+    };
+    async function getAccessToken() {
+      await fetch("https://accounts.spotify.com/api/token", authParams)
+        .then((res) => res.json())
+        .then((data) => {
+          setAccessToken(data.access_token);
+        });
+    }
+    getAccessToken();
+  }, []);
+
+  async function search(inputtedSong) {
+    let songParams = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    let songID = await fetch(
+      "https://api.spotify.com/v1/search?q=" + inputtedSong + "&type=track",
+      songParams
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }
+
+  search("90210");
   return (
     <Container fluid className="p-5 text-center ">
       <Row>
@@ -71,7 +112,10 @@ const PlaylistPage = () => {
           </Row>
         </Col>
         <Col>
-          <div className="text-center " style={{ width: "80%", height: "500px" }}>
+          <div
+            className="text-center "
+            style={{ width: "80%", height: "500px" }}
+          >
             <h1>Recommended Songs</h1>
             <ListGroup className="fs-5">
               <ListGroup.Item action>List Group Item 1</ListGroup.Item>

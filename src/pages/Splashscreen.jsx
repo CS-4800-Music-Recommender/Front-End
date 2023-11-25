@@ -2,7 +2,9 @@ import { Button, Col, Row, Container, Image, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../images/splashscreen/bpm-logo.png";
 import lineart from "../images/splashscreen/line-art.png";
+import { useEffect, useState } from "react";
 const Splashscreen = () => {
+  
   return (
     <Container fluid className="p-5 text-center ">
       <Row>
