@@ -8,6 +8,7 @@ import Splashscreen from "./pages/Splashscreen";
 import image from "./images/image.png";
 import Login from "./pages/Login";
 import PlaylistPage from "./pages/PlaylistPage";
+import Test from "./pages/Test";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/test" element={<Test />} />
           <Route path="/login" element={<Login />} />
           <Route path="/playlist" element={<PlaylistPage />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>

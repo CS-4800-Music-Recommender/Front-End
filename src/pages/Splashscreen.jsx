@@ -142,7 +142,7 @@ const Splashscreen = () => {
               }}
               size="lg"
               as={Link}
-              to="/test"
+              to="/playlist"
               className="p-3 fs-1 w-50"
             >
               Import
