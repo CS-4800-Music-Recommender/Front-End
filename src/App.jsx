@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import { Routes } from "react-router-dom";
 import { Route } from "react-router-dom";
-import Test from "./pages/Test";
+import Register from "./pages/Register";
 import Splashscreen from "./pages/Splashscreen";
 import image from "./images/image.png";
 import Login from "./pages/Login";
