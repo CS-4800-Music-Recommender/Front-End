@@ -86,8 +86,7 @@ const PlaylistPage = () => {
     setPlaylist((prevList) => [...prevList, searchBox]);
     const trackData = await search(searchBox);
     const trackID = extractTrackID(trackData);
-    const recommendationData = await getRecommendation(trackID);
-    console.log(recommendations, playlist);
+    await getRecommendation(trackID);
     setSearchBox("");
   };
 
