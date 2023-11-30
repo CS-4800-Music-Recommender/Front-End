@@ -44,25 +44,50 @@ const PlaylistPage = () => {
         Authorization: `Bearer ${accessToken}`,
       },
     };
-    await fetch(
-      "https://api.spotify.com/v1/search?q=" + inputtedSong + "&type=track",
+    const response = await fetch(
+      "https://api.spotify.com/v1/search?q=" +
+        inputtedSong +
+        "&type=track&limit=1",
       songParams
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
+    );
+    const data = await response.json();
+    return data;
   }
 
-const handleInputChange = (event) => {
-  setSearchBox(event.target.value);
+  const handleInputChange = (event) => {
+    setSearchBox(event.target.value);
+  };
+
+const extractTrackID = (data) => {
+  return data.tracks.items[0].id
 }
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-  setPlaylist(prevList => [...prevList, searchBox]);
-  setSearchBox('');
-}
+  const getRecommendation = async (trackID) => {
+    let recommendationParams = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    const response = await fetch(
+      "https://api.spotify.com/v1/recommendations?limit=5&seed_tracks=" +
+        trackID,
+      recommendationParams
+    );
+    const data = await response.json();
+    return data;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setPlaylist((prevList) => [...prevList, searchBox]);
+    const trackData = await search(searchBox);
+    const trackID = extractTrackID(trackData);
+    const recommendationData = await getRecommendation(trackID);
+    console.log(recommendationData);
+    setSearchBox("");
+  };
 
   return (
     <Container fluid className="p-5 text-center ">
@@ -118,7 +143,11 @@ const handleSubmit = (event) => {
               <Button variant="outline-secondary" id="button-addon2">
                 Artist
               </Button>
-              <Button variant="outline-secondary" id="button-addon2" onClick={handleSubmit}>
+              <Button
+                variant="outline-secondary"
+                id="button-addon2"
+                onClick={handleSubmit}
+              >
                 Song
               </Button>
             </InputGroup>
@@ -147,8 +176,9 @@ const handleSubmit = (event) => {
           >
             <ListGroup className="fs-5">
               {playlist.map((song, key) => (
-              <ListGroup.Item key={key} action>{song}</ListGroup.Item>
-                
+                <ListGroup.Item key={key} action>
+                  {song}
+                </ListGroup.Item>
               ))}
             </ListGroup>
           </div>
