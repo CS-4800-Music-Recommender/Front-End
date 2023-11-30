@@ -59,9 +59,9 @@ const PlaylistPage = () => {
     setSearchBox(event.target.value);
   };
 
-const extractTrackID = (data) => {
-  return data.tracks.items[0].id
-}
+  const extractTrackID = (data) => {
+    return data.tracks.items[0].id;
+  };
   const getRecommendation = async (trackID) => {
     let recommendationParams = {
       method: "GET",
@@ -78,7 +78,7 @@ const extractTrackID = (data) => {
     const data = await response.json();
     data.tracks.forEach((track) => {
       setRecommendations((prevList) => [...prevList, track.name]);
-    })
+    });
   };
 
   const handleSubmit = async (event) => {
@@ -87,7 +87,7 @@ const extractTrackID = (data) => {
     const trackData = await search(searchBox);
     const trackID = extractTrackID(trackData);
     const recommendationData = await getRecommendation(trackID);
-    console.log(recommendations, playlist)
+    console.log(recommendations, playlist);
     setSearchBox("");
   };
 
@@ -161,13 +161,18 @@ const extractTrackID = (data) => {
             style={{ width: "80%", height: "500px" }}
           >
             <h1>Recommended Songs</h1>
-            <ListGroup className="fs-5">
-              {recommendations.map((song, key) => (
-                <ListGroup.Item key={key} action>
-                  {song}
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
+            <div
+              className="text-center overflow-auto"
+              style={{ width: "80%", height: "500px" }}
+            >
+              <ListGroup className="fs-5 overflow-auto">
+                {recommendations.map((song, key) => (
+                  <ListGroup.Item key={key} action>
+                    {song}
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            </div>
           </div>
         </Col>
         <Col>
