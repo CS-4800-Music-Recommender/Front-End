@@ -16,6 +16,7 @@ const PlaylistPage = () => {
   const [accessToken, setAccessToken] = useState({});
   const [searchBox, setSearchBox] = useState("");
   const [playlist, setPlaylist] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
   useEffect(() => {
     let authParams = {
       method: "POST",
@@ -61,7 +62,6 @@ const PlaylistPage = () => {
 const extractTrackID = (data) => {
   return data.tracks.items[0].id
 }
-
   const getRecommendation = async (trackID) => {
     let recommendationParams = {
       method: "GET",
@@ -76,7 +76,9 @@ const extractTrackID = (data) => {
       recommendationParams
     );
     const data = await response.json();
-    return data;
+    data.tracks.forEach((track) => {
+      setRecommendations((prevList) => [...prevList, track.name]);
+    })
   };
 
   const handleSubmit = async (event) => {
@@ -85,7 +87,7 @@ const extractTrackID = (data) => {
     const trackData = await search(searchBox);
     const trackID = extractTrackID(trackData);
     const recommendationData = await getRecommendation(trackID);
-    console.log(recommendationData);
+    console.log(recommendations, playlist)
     setSearchBox("");
   };
 
@@ -160,9 +162,11 @@ const extractTrackID = (data) => {
           >
             <h1>Recommended Songs</h1>
             <ListGroup className="fs-5">
-              <ListGroup.Item action>List Group Item 1</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 2</ListGroup.Item>
-              <ListGroup.Item action>List Group Item 3</ListGroup.Item>
+              {recommendations.map((song, key) => (
+                <ListGroup.Item key={key} action>
+                  {song}
+                </ListGroup.Item>
+              ))}
             </ListGroup>
           </div>
         </Col>
