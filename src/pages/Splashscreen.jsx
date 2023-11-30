@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../images/splashscreen/bpm-logo.png";
 import lineart from "../images/splashscreen/line-art.png";
 const Splashscreen = () => {
+  
   return (
     <>
       {/* Row for 2 columns that have Logo and Search container, and Lineart container*/}
@@ -141,7 +142,7 @@ const Splashscreen = () => {
               }}
               size="lg"
               as={Link}
-              to="/test"
+              to="/playlist"
               className="p-3 fs-1 w-50"
             >
               Import

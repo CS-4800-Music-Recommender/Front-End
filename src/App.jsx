@@ -7,6 +7,7 @@ import Register from "./pages/Register";
 import Splashscreen from "./pages/Splashscreen";
 import image from "./images/image.png";
 import Login from "./pages/Login";
+import PlaylistPage from "./pages/PlaylistPage";
 import Test from "./pages/Test";
 
 function App() {
@@ -18,26 +19,16 @@ function App() {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         height: "100vh",
+        width: "100vw",
       }}
     >
       <BrowserRouter>
         <Routes>
-          <Route
-            path="/"
-            element={<Splashscreen />}
-          />
-          <Route
-            path="/register"
-            element={<Register />}
-          />
-          <Route
-            path="/login"
-            element={<Login />}
-          />
-          <Route
-            path="/playlist"
-            element={<Test />}
-          />
+          <Route path="/" element={<Splashscreen />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/playlist" element={<PlaylistPage />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>
