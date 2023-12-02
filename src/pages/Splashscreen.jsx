@@ -2,33 +2,23 @@ import { Button, Col, Row, Container, Image, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../images/splashscreen/bpm-logo.png";
 import lineart from "../images/splashscreen/line-art.png";
+import LoginButton from "../components/LoginButton";
+import LogoutButton from "../components/LogoutButton";
 const Splashscreen = () => {
-  
   return (
     <>
       {/* Row for 2 columns that have Logo and Search container, and Lineart container*/}
       <Row>
         <Col>
-          <Container
-            fluid
-            className="text-center"
-          >
+          <Container fluid className="text-center">
             <Row>
               <Col className="my-5">
-                <Image
-                  src={logo}
-                  width={300}
-                  fluid
-                  style={{}}
-                />
+                <Image src={logo} width={300} fluid style={{}} />
               </Col>
             </Row>
             {/* Search bar and buttons */}
             <Row>
-              <Col
-                md={{ span: 12, offset: 1 }}
-                className="my-5"
-              >
+              <Col md={{ span: 12, offset: 1 }} className="my-5">
                 <Form>
                   <Form.Group controlId="inputtedSong">
                     <Form.Control
@@ -89,30 +79,20 @@ const Splashscreen = () => {
         </Col>
         {/* Lineart */}
         <Col>
-          <Container
-            fluid
-            className="p-5 text-center"
-          >
+          <Container fluid className="p-5 text-center">
             <Row>
               <Col>
-                <Image
-                  src={lineart}
-                  width={300}
-                  fluid
-                />
+                <Image src={lineart} width={300} fluid />
               </Col>
             </Row>
           </Container>
         </Col>
       </Row>
       {/* Container for login and register buttons */}
-      <Container
-        fluid
-        className="my-5 text-center "
-      >
+      <Container fluid className="my-5 text-center ">
         <Row>
           <Col>
-            <Button
+            {/* <Button
               style={{
                 fontWeight: "bold",
                 borderRadius: "45px",
@@ -127,7 +107,9 @@ const Splashscreen = () => {
               className="w-50 p-3 fs-1"
             >
               Login
-            </Button>
+            </Button> */}
+            <LoginButton />
+            <LogoutButton />
           </Col>
           <Col>
             <Button
