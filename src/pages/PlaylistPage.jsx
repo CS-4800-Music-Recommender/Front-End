@@ -12,24 +12,6 @@ import { List } from "react-bootstrap-icons";
 import { ListGroup } from "react-bootstrap/esm";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
-import {initializeApp} from "firebase/app";
-import {getFirestore, collection, addDoc} from "firebase/firestore";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBTUuFCEWK78XM31h-bqOVw-DfEiGy74as",
-  authDomain: "cs-4800.firebaseapp.com",
-  projectId: "cs-4800",
-  storageBucket: "cs-4800.appspot.com",
-  messagingSenderId: "255169053476",
-  appId: "1:255169053476:web:de84c4f972abf63cea69b1"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-
-// Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
 
 
 const PlaylistPage = () => {
