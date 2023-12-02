@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import {useContext} from "react"
+import { UserContext } from "../context/UserContext";
 const Test = () => {
+  const user = useContext(UserContext)
+  console.log(user)
   return (
     <Container fluid className="p-5 text-center">
       <Col>
@@ -11,6 +15,8 @@ const Test = () => {
           </h1>
         </Row>
       </Col>
+      <Col>
+        <p className="fs-1">Current user: {user.nickname}</p></Col>
       <Col>
         <Button
           variant="outline-success"

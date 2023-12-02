@@ -92,22 +92,6 @@ const Splashscreen = () => {
       <Container fluid className="my-5 text-center ">
         <Row>
           <Col>
-            {/* <Button
-              style={{
-                fontWeight: "bold",
-                borderRadius: "45px",
-                backgroundColor: "#dbdbdb",
-                color: "#72B550",
-                borderWidth: "5px",
-                borderColor: "#000",
-                marginLeft: "128px",
-              }}
-              as={Link}
-              to="/login"
-              className="w-50 p-3 fs-1"
-            >
-              Login
-            </Button> */}
             <LoginButton />
             <LogoutButton />
           </Col>
