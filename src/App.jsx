@@ -8,12 +8,33 @@ import PlaylistPage from "./pages/PlaylistPage";
 import Test from "./pages/Test";
 import { useAuth0 } from "@auth0/auth0-react";
 import { UserContext } from "./context/UserContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const {user} = useAuth0();
+  const { user } = useAuth0();
+  const [accessToken, setAccessToken] = useState({});
+
+  useEffect(() => {
+    let authParams = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: `grant_type=client_credentials&client_id=${
+        import.meta.env.VITE_SPOTIFY_API_CLIENT_ID
+      }&client_secret=${import.meta.env.VITE_SPOTIFY_API_CLIENT_SECRET}`,
+    };
+    async function getAccessToken() {
+      await fetch("https://accounts.spotify.com/api/token", authParams)
+        .then((res) => res.json())
+        .then((data) => {
+          setAccessToken(data.access_token);
+        });
+    }
+    getAccessToken();
+  }, []);
   return (
-    <UserContext.Provider  value={user}>
+    <UserContext.Provider value={{user, accessToken}}>
       <div
         style={{
           backgroundImage: `url(${image})`,

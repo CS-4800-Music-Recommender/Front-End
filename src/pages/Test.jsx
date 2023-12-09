@@ -33,10 +33,13 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const testAdd = async (user) => {
+  console.log(user)
+  const docData = {
+    userNick: user.nickname,
+    musicList : ["test1", "test2", "test3"],
+  }
   try {
-    const docRef = await setDoc(doc(db, "users", user.email), {
-      userNick: user.nickname,
-    });
+    await setDoc(doc(db, "users", user.email), docData);
     // console.log("Document written with ID: ", docRef.id);
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -69,7 +72,7 @@ const Test = () => {
       </Col>
       {user && (
         <Col>
-          <p className="fs-1">Current user: {user.nickname}</p>
+          <p className="fs-1">Current user: {user.user.nickname}</p>
         </Col>
       )}
       <Col>
@@ -88,7 +91,7 @@ const Test = () => {
           variant="outline-success"
           size="lg"
           className="my-3 w-50 p-3 fs-1"
-          onClick={() => testAdd(user)}
+          onClick={() => testAdd(user.user)}
         >
           test add to db
         </Button>

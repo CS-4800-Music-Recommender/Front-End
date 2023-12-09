@@ -10,34 +10,76 @@ import {
 import logo from "../images/splashscreen/bpm-logo.png";
 import { List } from "react-bootstrap-icons";
 import { ListGroup } from "react-bootstrap/esm";
-import { useEffect, useState, useContext } from "react";
+import { useEffect,useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  doc,
+  query,
+  where,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBTUuFCEWK78XM31h-bqOVw-DfEiGy74as",
+  authDomain: "cs-4800.firebaseapp.com",
+  projectId: "cs-4800",
+  storageBucket: "cs-4800.appspot.com",
+  messagingSenderId: "255169053476",
+  appId: "1:255169053476:web:de84c4f972abf63cea69b1",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
+const updateUserPlaylist = async (user, playlist) => {
+  const docData = {
+    userEmail: user.email,
+    musicList: playlist
+  };
+  try {
+    await setDoc(doc(db, "users", user.email), docData);
+    // console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
+
+const loadPlaylist = async (user) => {
+  const colRef = collection(db, "users");
+
+  const q = query(colRef, where("userEmail", "==", user.email));
+
+  onSnapshot(q, (querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data());
+    });
+  })
+}
+
+// The plan is as follows
+// We already have the ability to save something to the firestore database, and we can have it where it saves based off users email or username
+// The field that's being sent to the database is the playlist usestate array that we have
+// We will then have the website automatically load a users playlist if they already had one made
 
 const PlaylistPage = () => {
-  const [accessToken, setAccessToken] = useState({});
+  const user = useContext(UserContext).user;
+  useEffect(() => {
+    if (user) {
+      loadPlaylist(user);
+    }
+  })
   const [searchBox, setSearchBox] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
-  useEffect(() => {
-    let authParams = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: `grant_type=client_credentials&client_id=${
-        import.meta.env.VITE_SPOTIFY_API_CLIENT_ID
-      }&client_secret=${import.meta.env.VITE_SPOTIFY_API_CLIENT_SECRET}`,
-    };
-    async function getAccessToken() {
-      await fetch("https://accounts.spotify.com/api/token", authParams)
-        .then((res) => res.json())
-        .then((data) => {
-          setAccessToken(data.access_token);
-        });
-    }
-    getAccessToken();
-  }, []);
+  const accessToken = useContext(UserContext).accessToken;
+  
 
   async function search(inputtedSong) {
     let songParams = {
@@ -86,6 +128,7 @@ const PlaylistPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setPlaylist((prevList) => [...prevList, searchBox]);
+    updateUserPlaylist(user, playlist);
     const trackData = await search(searchBox);
     const trackID = extractTrackID(trackData);
     await getRecommendation(trackID);
