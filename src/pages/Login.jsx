@@ -15,11 +15,13 @@ const Login = () => {
         >
           <Row>
             <Col>
-              <Image
-                src={logo}
-                width={300}
-                fluid
-              />
+              <Link to="/">
+                <Image
+                  src={logo}
+                  width={300}
+                  fluid
+                />
+              </Link>
             </Col>
           </Row>
         </Container>

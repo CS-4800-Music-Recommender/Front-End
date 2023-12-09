@@ -1,4 +1,4 @@
-import { Button, Col, Row, Container, Image, Form } from "react-bootstrap";
+import { Button, Col, Row, Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../images/splashscreen/bpm-logo.png";
 import lineart from "../images/splashscreen/line-art.png";
@@ -9,72 +9,17 @@ const Splashscreen = () => {
     <>
       {/* Row for 2 columns that have Logo and Search container, and Lineart container*/}
       <Row>
-        <Col>
-          <Container fluid className="text-center">
-            <Row>
-              <Col className="my-5">
-                <Image src={logo} width={300} fluid style={{}} />
-              </Col>
-            </Row>
-            {/* Search bar and buttons */}
-            <Row>
-              <Col md={{ span: 12, offset: 1 }} className="my-5">
-                <Form>
-                  <Form.Group controlId="inputtedSong">
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter a song or an artist to build a playlist with"
-                      size="lg"
-                    />
-                  </Form.Group>
-                </Form>
-              </Col>
-            </Row>
-            <Row>
-              <Col className="mx-5 d-flex">
-                <Button
-                  style={{
-                    height: "50px",
-                    textAlign: "center",
-                    display: "flex",
-                    alignItems: "center",
-                    fontWeight: "bold",
-                    borderRadius: "45px",
-                    backgroundColor: "#dbdbdb",
-                    color: "#72B550",
-                    borderWidth: "5px",
-                    borderColor: "#000",
-                    justifyContent: "center",
-                    marginRight: "5px",
-                    marginLeft: "128px",
-                  }}
-                  type="submit"
-                  className="p-3 fs-3"
-                >
-                  Search Song
-                </Button>
-                <Button
-                  style={{
-                    height: "50px",
-                    textAlign: "center",
-                    display: "flex",
-                    alignItems: "center",
-                    fontWeight: "bold",
-                    borderRadius: "45px",
-                    backgroundColor: "#dbdbdb",
-                    color: "#72B550",
-                    borderWidth: "5px",
-                    borderColor: "#000",
-                    justifyContent: "center",
-                    marginLeft: "64px",
-                  }}
-                  type="submit"
-                  className="p-3 fs-3"
-                >
-                  Search Artist
-                </Button>
-              </Col>
-            </Row>
+        <Col className="d-flex align-items-center justify-content-center my-5">
+          <Container
+            fluid
+            className="text-center"
+          >
+            <Image
+              src={logo}
+              width={400}
+              fluid
+              style={{}}
+            />
           </Container>
         </Col>
         {/* Lineart */}
@@ -111,7 +56,7 @@ const Splashscreen = () => {
               to="/playlist"
               className="p-3 fs-1 w-50"
             >
-              Import
+              Create
             </Button>
           </Col>
         </Row>
