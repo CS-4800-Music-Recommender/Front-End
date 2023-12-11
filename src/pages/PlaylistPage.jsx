@@ -14,7 +14,6 @@ import { ListGroup } from "react-bootstrap/esm";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { initializeApp } from "firebase/app";
-import LogoutButton from "../components/LogoutButton";
 
 import {
   getFirestore,
@@ -92,7 +91,7 @@ const PlaylistPage = () => {
       }
     }
     isMounted.current = true;
-  }, [playlist]);
+  }, [playlist, user]);
   useEffect(() => {
     if (user) {
       loadPlaylist(user);
@@ -153,11 +152,23 @@ const PlaylistPage = () => {
     setSearchBox("");
   };
 
-  // const savePlaylist = async (event) => {
-  //   event.preventDefault();
-  //   console.log("test");
-  //   // updateUserPlaylist(user, playlist);
-  // };
+  const clearPlaylist = async (event) => {
+    event.preventDefault();
+    setPlaylist([]);
+    setRecommendations([]);
+    const docData = {
+      userEmail: user.email,
+      musicList: [],
+    };
+    try {
+      // console.log(playlist)
+      await setDoc(doc(db, "users", user.email), docData);
+      // console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
   //Hambuger menu alert box************************************************
   const customAlert = () => {
     // Array of items to list
@@ -570,10 +581,10 @@ const PlaylistPage = () => {
                       marginRight: "128px",
                     }}
                     size="lg"
-                    onClick={createAlert}
+                    onClick={clearPlaylist}
                     className="my-3 p-3 fs-5"
                   >
-                    Create Playlist
+                    Delete Playlist
                   </Button>
                 </Row>
 
