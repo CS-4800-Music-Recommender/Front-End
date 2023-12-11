@@ -98,7 +98,9 @@ const PlaylistPage = () => {
     }
   }, []);
 
-  async function search(inputtedSong) {
+  // inputtedText would be the name of the artist or song, type would be if it's an artist or a track. Allowed Types: "album", "artist", "playlist", "track", "show", "episode", "audiobook"
+  // Here the type will either be "artist" or "track"
+  async function search(inputtedText, type) {
     let songParams = {
       method: "GET",
       headers: {
@@ -107,9 +109,7 @@ const PlaylistPage = () => {
       },
     };
     const response = await fetch(
-      "https://api.spotify.com/v1/search?q=" +
-        inputtedSong +
-        "&type=track&limit=1",
+      `https://api.spotify.com/v1/search?q=${inputtedText}&type=${type}&limit=1`,
       songParams
     );
     const data = await response.json();
@@ -120,10 +120,18 @@ const PlaylistPage = () => {
     setSearchBox(event.target.value);
   };
 
-  const extractTrackID = (data) => {
-    return data.tracks.items[0].id;
+  const extractTrackID = (data, type) => {
+    if (type === "track") {
+      return data.tracks.items[0].id;
+    } else if (type === "artist") {
+      return data.artists.items[0].id;
+    }
   };
-  const getRecommendation = async (trackID) => {
+
+  // textID is either going to be the name of the artist or the name of the track.
+  // Type is going to either be for searching artist or track. The type will either be "artists" or "tracks"
+  const getRecommendation = async (textID, type) => {
+    const typeWithS = type + "s";
     let recommendationParams = {
       method: "GET",
       headers: {
@@ -132,8 +140,7 @@ const PlaylistPage = () => {
       },
     };
     const response = await fetch(
-      "https://api.spotify.com/v1/recommendations?limit=2&seed_tracks=" +
-        trackID,
+      `https://api.spotify.com/v1/recommendations?limit=2&seed_${typeWithS}=${textID}`,
       recommendationParams
     );
     const data = await response.json();
@@ -142,13 +149,14 @@ const PlaylistPage = () => {
     });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, type) => {
     event.preventDefault();
-    setPlaylist((prevList) => [...prevList, searchBox]);
-    // updateUserPlaylist(user, playlist);
-    const trackData = await search(searchBox);
-    const trackID = extractTrackID(trackData);
-    await getRecommendation(trackID);
+    if (type === "track") {
+      setPlaylist((prevList) => [...prevList, searchBox]);
+    }
+    const trackData = await search(searchBox, type);
+    const trackID = extractTrackID(trackData, type);
+    await getRecommendation(trackID, type);
     setSearchBox("");
   };
 
@@ -598,13 +606,17 @@ const PlaylistPage = () => {
                       value={searchBox}
                       onChange={handleInputChange}
                     />
-                    <Button variant="outline-secondary" id="button-addon2">
+                    <Button
+                      variant="outline-secondary"
+                      id="button-addon2"
+                      onClick={(event) => handleSubmit(event, "artist")}
+                    >
                       Artist
                     </Button>
                     <Button
                       variant="outline-secondary"
                       id="button-addon2"
-                      onClick={handleSubmit}
+                      onClick={(event) => handleSubmit(event, "track")}
                     >
                       Song
                     </Button>
