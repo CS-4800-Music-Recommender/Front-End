@@ -520,7 +520,6 @@ const PlaylistPage = () => {
             >
               <List size={70} onClick={customAlert} />
             </Col>
-            <Col></Col>
             <Col md={{ span: 4, offset: 3 }} className="text-center">
               <Link to="/">
                 <Image src={logo} width={300} fluid />
