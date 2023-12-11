@@ -132,7 +132,7 @@ const PlaylistPage = () => {
       },
     };
     const response = await fetch(
-      "https://api.spotify.com/v1/recommendations?limit=5&seed_tracks=" +
+      "https://api.spotify.com/v1/recommendations?limit=2&seed_tracks=" +
         trackID,
       recommendationParams
     );
