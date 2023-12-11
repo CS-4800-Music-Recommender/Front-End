@@ -18,12 +18,12 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBTUuFCEWK78XM31h-bqOVw-DfEiGy74as",
-  authDomain: "cs-4800.firebaseapp.com",
-  projectId: "cs-4800",
-  storageBucket: "cs-4800.appspot.com",
-  messagingSenderId: "255169053476",
-  appId: "1:255169053476:web:de84c4f972abf63cea69b1",
+  apiKey: "AIzaSyDjJXiSe8NLbQmIEQ1Jp0bJt0nvmpfsqgY",
+  authDomain: "test-db-4c9b3.firebaseapp.com",
+  projectId: "test-db-4c9b3",
+  storageBucket: "test-db-4c9b3.appspot.com",
+  messagingSenderId: "670488527506",
+  appId: "1:670488527506:web:ac82e677dc91342701dc4b",
 };
 
 // Initialize Firebase

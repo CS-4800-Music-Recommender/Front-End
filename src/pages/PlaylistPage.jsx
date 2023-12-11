@@ -1,11 +1,21 @@
-import { Container, Row, Col, Image, Button, InputGroup, Form } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Image,
+  Button,
+  InputGroup,
+  Form,
+} from "react-bootstrap";
 import logo from "../images/splashscreen/bpm-logo.png";
 import { Link } from "react-router-dom";
 import { List } from "react-bootstrap-icons";
 import { ListGroup } from "react-bootstrap/esm";
-import { useEffect,useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { initializeApp } from "firebase/app";
+import LogoutButton from "../components/LogoutButton";
+
 import {
   getFirestore,
   collection,
@@ -15,14 +25,23 @@ import {
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
+import { useRef } from "react";
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBTUuFCEWK78XM31h-bqOVw-DfEiGy74as",
+//   authDomain: "cs-4800.firebaseapp.com",
+//   projectId: "cs-4800",
+//   storageBucket: "cs-4800.appspot.com",
+//   messagingSenderId: "255169053476",
+//   appId: "1:255169053476:web:de84c4f972abf63cea69b1",
+// };
 const firebaseConfig = {
-  apiKey: "AIzaSyBTUuFCEWK78XM31h-bqOVw-DfEiGy74as",
-  authDomain: "cs-4800.firebaseapp.com",
-  projectId: "cs-4800",
-  storageBucket: "cs-4800.appspot.com",
-  messagingSenderId: "255169053476",
-  appId: "1:255169053476:web:de84c4f972abf63cea69b1",
+  apiKey: "AIzaSyDjJXiSe8NLbQmIEQ1Jp0bJt0nvmpfsqgY",
+  authDomain: "test-db-4c9b3.firebaseapp.com",
+  projectId: "test-db-4c9b3",
+  storageBucket: "test-db-4c9b3.appspot.com",
+  messagingSenderId: "670488527506",
+  appId: "1:670488527506:web:ac82e677dc91342701dc4b",
 };
 
 // Initialize Firebase
@@ -31,48 +50,54 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
-const updateUserPlaylist = async (user, playlist) => {
-  const docData = {
-    userEmail: user.email,
-    musicList: playlist
-  };
-  try {
-    await setDoc(doc(db, "users", user.email), docData);
-    // console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-}
-
-const loadPlaylist = async (user) => {
-  const colRef = collection(db, "users");
-
-  const q = query(colRef, where("userEmail", "==", user.email));
-
-  onSnapshot(q, (querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      console.log(doc.data());
-    });
-  })
-}
-
-// The plan is as follows
-// We already have the ability to save something to the firestore database, and we can have it where it saves based off users email or username
-// The field that's being sent to the database is the playlist usestate array that we have
-// We will then have the website automatically load a users playlist if they already had one made
-
 const PlaylistPage = () => {
-  const user = useContext(UserContext).user;
-  useEffect(() => {
-    if (user) {
-      loadPlaylist(user);
-    }
-  })
   const [searchBox, setSearchBox] = useState("");
   const [playlist, setPlaylist] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
   const accessToken = useContext(UserContext).accessToken;
-  
+  const isMounted = useRef(false);
+  const loadPlaylist = async (user) => {
+    console.log("Loaded playlist");
+
+    const colRef = collection(db, "users");
+
+    const q = query(colRef, where("userEmail", "==", user.email));
+
+    onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        setPlaylist(data.musicList);
+      });
+    });
+  };
+  const user = useContext(UserContext).user;
+
+  useEffect(() => {
+    if (isMounted.current) {
+      if (user && playlist.length > 0) {
+        const updateUserPlaylist = async (user, playlist) => {
+          const docData = {
+            userEmail: user.email,
+            musicList: playlist,
+          };
+          try {
+            // console.log(playlist)
+            await setDoc(doc(db, "users", user.email), docData);
+            // console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+        };
+        updateUserPlaylist(user, playlist);
+      }
+    }
+    isMounted.current = true;
+  }, [playlist]);
+  useEffect(() => {
+    if (user) {
+      loadPlaylist(user);
+    }
+  }, []);
 
   async function search(inputtedSong) {
     let songParams = {
@@ -83,7 +108,9 @@ const PlaylistPage = () => {
       },
     };
     const response = await fetch(
-      "https://api.spotify.com/v1/search?q=" + inputtedSong + "&type=track&limit=1",
+      "https://api.spotify.com/v1/search?q=" +
+        inputtedSong +
+        "&type=track&limit=1",
       songParams
     );
     const data = await response.json();
@@ -106,7 +133,8 @@ const PlaylistPage = () => {
       },
     };
     const response = await fetch(
-      "https://api.spotify.com/v1/recommendations?limit=5&seed_tracks=" + trackID,
+      "https://api.spotify.com/v1/recommendations?limit=5&seed_tracks=" +
+        trackID,
       recommendationParams
     );
     const data = await response.json();
@@ -118,12 +146,18 @@ const PlaylistPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setPlaylist((prevList) => [...prevList, searchBox]);
-    updateUserPlaylist(user, playlist);
+    // updateUserPlaylist(user, playlist);
     const trackData = await search(searchBox);
     const trackID = extractTrackID(trackData);
     await getRecommendation(trackID);
     setSearchBox("");
   };
+
+  // const savePlaylist = async (event) => {
+  //   event.preventDefault();
+  //   console.log("test");
+  //   // updateUserPlaylist(user, playlist);
+  // };
   //Hambuger menu alert box************************************************
   const customAlert = () => {
     // Array of items to list
@@ -457,10 +491,7 @@ const PlaylistPage = () => {
     <>
       {/* First container holding hamburger menu and Logo */}
       <Row>
-        <Container
-          fluid
-          className="p-5 text-center"
-        >
+        <Container fluid className="p-5 text-center">
           <Row>
             <Col
               xs={12}
@@ -468,21 +499,12 @@ const PlaylistPage = () => {
               className="text-left"
               style={{ cursor: "pointer" }}
             >
-              <List
-                size={70}
-                onClick={customAlert}
-              />
+              <List size={70} onClick={customAlert} />
             </Col>
-            <Col
-              md={{ span: 4, offset: 3 }}
-              className="text-center"
-            >
+            <Col></Col>
+            <Col md={{ span: 4, offset: 3 }} className="text-center">
               <Link to="/">
-                <Image
-                  src={logo}
-                  width={300}
-                  fluid
-                />
+                <Image src={logo} width={300} fluid />
               </Link>
             </Col>
           </Row>
@@ -492,10 +514,7 @@ const PlaylistPage = () => {
       {/* Start of 3 columns of containers for buttons and two lists */}
       <Row>
         <Col>
-          <Container
-            fluid
-            className="text-center"
-          >
+          <Container fluid className="text-center">
             {/* Buttons and search column */}
             <Col md={{ span: 8, offset: 2 }}>
               <div className="text-center">
@@ -512,8 +531,6 @@ const PlaylistPage = () => {
                       marginRight: "128px",
                     }}
                     size="lg"
-                    as={Link}
-                    to="/playlist"
                     className="my-3 p-3 fs-5"
                   >
                     Save Playlist
@@ -570,10 +587,7 @@ const PlaylistPage = () => {
                       value={searchBox}
                       onChange={handleInputChange}
                     />
-                    <Button
-                      variant="outline-secondary"
-                      id="button-addon2"
-                    >
+                    <Button variant="outline-secondary" id="button-addon2">
                       Artist
                     </Button>
                     <Button
@@ -601,10 +615,7 @@ const PlaylistPage = () => {
               width: "100%",
             }}
           >
-            <Container
-              fluid
-              className="text-center "
-            >
+            <Container fluid className="text-center ">
               <div className="text-center ">
                 <h2>
                   <b>Recommended</b>
@@ -612,10 +623,7 @@ const PlaylistPage = () => {
                 <div className="text-center">
                   <ListGroup className="fs-5 overflow-auto">
                     {recommendations.map((song, key) => (
-                      <ListGroup.Item
-                        key={key}
-                        action
-                      >
+                      <ListGroup.Item key={key} action>
                         {song}
                       </ListGroup.Item>
                     ))}
@@ -637,20 +645,16 @@ const PlaylistPage = () => {
               width: "80%",
             }}
           >
-            <Container
-              fluid
-              className="text-center "
-            >
+            <Container fluid className="text-center ">
               <div className="text-center ">
-                <h2 style={{ fontWeight: "bold", color: "#72B550" }}>Current Playlist</h2>
+                <h2 style={{ fontWeight: "bold", color: "#72B550" }}>
+                  Current Playlist
+                </h2>
               </div>
               <div className="text-center">
                 <ListGroup className="fs-5">
                   {playlist.map((song, key) => (
-                    <ListGroup.Item
-                      key={key}
-                      action
-                    >
+                    <ListGroup.Item key={key} action>
                       {song}
                     </ListGroup.Item>
                   ))}
