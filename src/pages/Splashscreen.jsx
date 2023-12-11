@@ -33,7 +33,7 @@ const Splashscreen = () => {
           </Container>
         </Col>
       </Row>
-      {/* Container for login and register buttons */}
+      {/* Container for login and Create buttons */}
       <Container fluid className="my-5 text-center ">
         <Row>
           <Col>
@@ -44,17 +44,17 @@ const Splashscreen = () => {
             <Button
               style={{
                 fontWeight: "bold",
-                borderRadius: "45px",
-                backgroundColor: "#72B550",
-                color: "#000",
-                borderWidth: "5px",
-                borderColor: "#000",
-                marginRight: "128px",
+                  borderRadius: "45px",
+                  backgroundColor: "#72B550",
+                  color: "#000",
+                  borderWidth: "5px",
+                  borderColor: "#000",
+                  marginLeft: "128px",
               }}
+              className="my-3 p-3 fs-1 w-50"
               size="lg"
               as={Link}
               to="/playlist"
-              className="p-3 fs-1 w-50"
             >
               Create
             </Button>
