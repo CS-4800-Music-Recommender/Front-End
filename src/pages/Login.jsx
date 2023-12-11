@@ -1,6 +1,8 @@
 import { Button, Col, Container, Row, Image, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../images/splashscreen/bpm-logo.png";
+import LoginButton from "../components/LoginButton";
+import LogoutButton from "../components/LogoutButton";
 
 const Login = () => {
   return (
@@ -64,22 +66,8 @@ const Login = () => {
           </Row>
           <Row style={{ marginTop: "50px" }}>
             <Col md={{ span: 4, offset: 2 }}>
-              <Button
-                style={{
-                  fontWeight: "bold",
-                  borderRadius: "45px",
-                  backgroundColor: "#72B550",
-                  color: "#000",
-                  borderWidth: "5px",
-                  borderColor: "#000",
-                  marginLeft: "128px",
-                }}
-                as={Link}
-                to="/"
-                className="my-3 p-3 fs-1 w-50"
-              >
-                Login
-              </Button>
+              <LoginButton/>
+              <LogoutButton/>
             </Col>
             <Col md={{ span: 4, offset: 0 }}>
               <Button

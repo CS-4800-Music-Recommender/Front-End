@@ -1,7 +1,9 @@
-import { Button, Col, Row, Container, Image, Form } from "react-bootstrap";
+import { Button, Col, Row, Container, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../images/splashscreen/bpm-logo.png";
 import lineart from "../images/splashscreen/line-art.png";
+import LoginButton from "../components/LoginButton";
+import LogoutButton from "../components/LogoutButton";
 const Splashscreen = () => {
   return (
     <>
@@ -22,45 +24,21 @@ const Splashscreen = () => {
         </Col>
         {/* Lineart */}
         <Col>
-          <Container
-            fluid
-            className="p-5 text-center"
-          >
+          <Container fluid className="p-5 text-center">
             <Row>
               <Col>
-                <Image
-                  src={lineart}
-                  width={300}
-                  fluid
-                />
+                <Image src={lineart} width={300} fluid />
               </Col>
             </Row>
           </Container>
         </Col>
       </Row>
       {/* Container for login and register buttons */}
-      <Container
-        fluid
-        className="my-5 text-center "
-      >
+      <Container fluid className="my-5 text-center ">
         <Row>
           <Col>
-            <Button
-              style={{
-                fontWeight: "bold",
-                borderRadius: "45px",
-                backgroundColor: "#dbdbdb",
-                color: "#72B550",
-                borderWidth: "5px",
-                borderColor: "#000",
-                marginLeft: "128px",
-              }}
-              as={Link}
-              to="/login"
-              className="w-50 p-3 fs-1"
-            >
-              Login
-            </Button>
+            <LoginButton />
+            <LogoutButton />
           </Col>
           <Col>
             <Button
