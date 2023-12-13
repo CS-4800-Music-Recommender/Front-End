@@ -57,7 +57,6 @@ const PlaylistPage = () => {
   const accessToken = useContext(UserContext).accessToken;
   const isMounted = useRef(false);
   const loadPlaylist = async (user) => {
-    console.log("Loaded playlist");
 
     const colRef = collection(db, "users");
 
@@ -81,9 +80,7 @@ const PlaylistPage = () => {
             musicList: playlist,
           };
           try {
-            // console.log(playlist)
             await setDoc(doc(db, "users", user.email), docData);
-            // console.log("Document written with ID: ", docRef.id);
           } catch (e) {
             console.error("Error adding document: ", e);
           }
@@ -146,7 +143,6 @@ const PlaylistPage = () => {
     );
     const data = await response.json();
     data.tracks.forEach((track) => {
-      console.log(track.artists[0].name)
       const recName = `${track.name} - ${track.artists[0].name}`
       setRecommendations((prevList) => [...prevList, recName]);
     });
@@ -172,9 +168,7 @@ const PlaylistPage = () => {
       musicList: [],
     };
     try {
-      // console.log(playlist)
       await setDoc(doc(db, "users", user.email), docData);
-      // console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
