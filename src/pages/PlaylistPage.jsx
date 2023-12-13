@@ -57,8 +57,6 @@ const PlaylistPage = () => {
   const accessToken = useContext(UserContext).accessToken;
   const isMounted = useRef(false);
   const loadPlaylist = async (user) => {
-    console.log("Loaded playlist");
-
     const colRef = collection(db, "users");
 
     const q = query(colRef, where("userEmail", "==", user.email));
@@ -81,9 +79,7 @@ const PlaylistPage = () => {
             musicList: playlist,
           };
           try {
-            // console.log(playlist)
             await setDoc(doc(db, "users", user.email), docData);
-            // console.log("Document written with ID: ", docRef.id);
           } catch (e) {
             console.error("Error adding document: ", e);
           }
@@ -98,6 +94,16 @@ const PlaylistPage = () => {
       loadPlaylist(user);
     }
   }, []);
+
+  const exportPlaylist = async (event) => {
+    event.preventDefault();
+    navigator.clipboard.writeText(JSON.stringify(playlist))
+  };
+
+  const importPlaylist = async (musicArray) => {
+    const playlist = JSON.parse(musicArray);
+    setPlaylist(playlist);
+  }
 
   // inputtedText would be the name of the artist or song, type would be if it's an artist or a track. Allowed Types: "album", "artist", "playlist", "track", "show", "episode", "audiobook"
   // Here the type will either be "artist" or "track"
@@ -146,7 +152,8 @@ const PlaylistPage = () => {
     );
     const data = await response.json();
     data.tracks.forEach((track) => {
-      setRecommendations((prevList) => [...prevList, track.name]);
+      const recName = `${track.name} - ${track.artists[0].name}`;
+      setRecommendations((prevList) => [...prevList, recName]);
     });
   };
 
@@ -170,9 +177,7 @@ const PlaylistPage = () => {
       musicList: [],
     };
     try {
-      // console.log(playlist)
       await setDoc(doc(db, "users", user.email), docData);
-      // console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -181,18 +186,7 @@ const PlaylistPage = () => {
   //Hambuger menu alert box************************************************
   const customAlert = () => {
     // Array of items to list
-    const itemList = [
-      "Item 1",
-      "Item 2",
-      "Item 3",
-      "Item 4",
-      "Item 5",
-      "Item 6",
-      "Item 7",
-      "Item 8",
-      "Item 9",
-      "Item 10",
-    ];
+    const itemList = playlist;
 
     // Create overlay
     const overlay = document.createElement("div");
@@ -328,7 +322,7 @@ const PlaylistPage = () => {
     // Create input box
     const inputBox = document.createElement("input");
     inputBox.type = "text";
-    inputBox.placeholder = "Enter playlist URL";
+    inputBox.placeholder = "Enter playlist array";
     inputBox.style.width = "100%"; // Make the input box wider
     inputBox.style.paddingLeft = "10px"; // Add padding to the left
     inputBox.style.marginBottom = "10px";
@@ -353,11 +347,11 @@ const PlaylistPage = () => {
     submitButton.style.fontWeight = "bold"; // Make the font bold
 
     // Add click event to submit button
-    submitButton.onclick = () => {
+    submitButton.onclick = async () => {
       // Handle the submission logic here
       const inputValue = inputBox.value;
       // You can add logic to handle the input value, e.g., make an API call
-      console.log("Submitted value:", inputValue);
+      await importPlaylist(inputValue);
 
       // Close the import alert
       document.body.removeChild(importAlertDiv);
@@ -409,15 +403,7 @@ const PlaylistPage = () => {
       <Row>
         <Container fluid className="p-5 text-center">
           <Row>
-            <Col
-              xs={12}
-              md={{ span: 1, offset: 0 }}
-              className="text-left"
-              style={{ cursor: "pointer" }}
-            >
-              <List size={70} onClick={customAlert} />
-            </Col>
-            <Col md={{ span: 4, offset: 3 }} className="text-center">
+            <Col className="text-center">
               <Link to="/">
                 <Image src={logo} width={300} fluid />
               </Link>
@@ -434,6 +420,7 @@ const PlaylistPage = () => {
             <Col md={{ span: 8, offset: 2 }}>
               <div className="text-center">
                 {/* Export playlist Button */}
+
                 <Row>
                   <Button
                     style={{
@@ -447,11 +434,11 @@ const PlaylistPage = () => {
                     }}
                     size="lg"
                     className="my-3 p-3 fs-5"
+                    onClick={exportPlaylist}
                   >
-                    Save Playlist
+                    Export Playlist
                   </Button>
                 </Row>
-
                 {/* Import Playlist button */}
                 <Row>
                   <Button
@@ -544,7 +531,7 @@ const PlaylistPage = () => {
                     {recommendations.map((song, key) => (
                       <SongItem
                         extractTrackID={extractTrackID}
-                        search = {search}
+                        search={search}
                         getRecommendation={getRecommendation}
                         key={key}
                         songName={song}
