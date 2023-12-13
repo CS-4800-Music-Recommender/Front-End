@@ -14,7 +14,7 @@ import { ListGroup } from "react-bootstrap/esm";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { initializeApp } from "firebase/app";
-import SongItem from "../components/songItem";
+import SongItem from "../components/SongItem";
 
 import {
   getFirestore,
