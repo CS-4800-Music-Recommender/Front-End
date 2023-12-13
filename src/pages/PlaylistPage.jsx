@@ -186,18 +186,7 @@ const PlaylistPage = () => {
   //Hambuger menu alert box************************************************
   const customAlert = () => {
     // Array of items to list
-    const itemList = [
-      "Item 1",
-      "Item 2",
-      "Item 3",
-      "Item 4",
-      "Item 5",
-      "Item 6",
-      "Item 7",
-      "Item 8",
-      "Item 9",
-      "Item 10",
-    ];
+    const itemList = playlist;
 
     // Create overlay
     const overlay = document.createElement("div");
@@ -414,15 +403,7 @@ const PlaylistPage = () => {
       <Row>
         <Container fluid className="p-5 text-center">
           <Row>
-            <Col
-              xs={12}
-              md={{ span: 1, offset: 0 }}
-              className="text-left"
-              style={{ cursor: "pointer" }}
-            >
-              <List size={70} onClick={customAlert} />
-            </Col>
-            <Col md={{ span: 4, offset: 3 }} className="text-center">
+            <Col className="text-center">
               <Link to="/">
                 <Image src={logo} width={300} fluid />
               </Link>
