@@ -21,16 +21,15 @@ const SongItem = ({
     };
 
     return (
-        <ListGroup.Item key={itemKey} action onClick={(e) => handleClick(e)}>
+        <ListGroup.Item key={itemKey} action onClick={() => {navigator.clipboard.writeText(songName)}} onDoubleClick={(e) => handleClick(e)}>
             {songName}
         </ListGroup.Item>
     );
 };
 
 SongItem.propTypes = {
-    itemKey: PropTypes.string.isRequired,
+    itemKey: PropTypes.string,
     songName: PropTypes.string.isRequired,
-    playList: PropTypes.array.isRequired,
     setRecommendations: PropTypes.func.isRequired,
     recommendations: PropTypes.array.isRequired,
     getRecommendation: PropTypes.func.isRequired,
@@ -40,3 +39,4 @@ SongItem.propTypes = {
 };
 
 export default SongItem;
+
