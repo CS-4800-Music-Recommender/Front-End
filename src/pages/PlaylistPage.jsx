@@ -14,6 +14,7 @@ import { ListGroup } from "react-bootstrap/esm";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { initializeApp } from "firebase/app";
+import SongItem from "../components/songItem";
 
 import {
   getFirestore,
@@ -401,110 +402,6 @@ const PlaylistPage = () => {
   };
 
   // Create Playlist Alert*********************************************
-  const createAlert = () => {
-    // Create create alert overlay
-    const createOverlay = document.createElement("div");
-    createOverlay.style.position = "fixed";
-    createOverlay.style.top = "0";
-    createOverlay.style.left = "0";
-    createOverlay.style.width = "100%";
-    createOverlay.style.height = "100%";
-    createOverlay.style.background = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black background
-    createOverlay.style.zIndex = "2000"; // Z-index should be higher than the customAlert overlay
-    document.body.appendChild(createOverlay);
-
-    // Create create alert container
-    const createAlertDiv = document.createElement("div");
-    createAlertDiv.style.position = "fixed";
-    createAlertDiv.style.zIndex = "2001"; // Higher z-index than the customAlert container
-    createAlertDiv.style.left = "50%";
-    createAlertDiv.style.top = "50%";
-    createAlertDiv.style.transform = "translate(-50%, -50%)";
-    createAlertDiv.style.backgroundColor = "#484848"; // Background color of the create alert container
-    createAlertDiv.style.padding = "20px";
-    createAlertDiv.style.borderRadius = "45px";
-    createAlertDiv.style.border = "5px solid #393939"; // Border around the create alert container
-    createAlertDiv.style.display = "flex";
-    createAlertDiv.style.flexDirection = "column";
-    createAlertDiv.style.alignItems = "center"; // Center the content horizontally
-    createAlertDiv.style.justifyContent = "center"; // Center the content vertically
-
-    // Create message
-    const message = document.createElement("p");
-    message.innerHTML =
-      "If you create a new playlist<br> you will lose any unsaved<br> changes to your current<br> playlist. Continue?";
-    message.style.marginBottom = "20px";
-    message.style.color = "#fff"; // Set text color to white
-    message.style.textAlign = "center"; // Center the text
-    message.style.fontSize = "18px"; // Set the font size
-    message.style.fontWeight = "bold"; // Make the font bold
-
-    // Create button container
-    const buttonContainer = document.createElement("div");
-    buttonContainer.style.display = "flex";
-    buttonContainer.style.justifyContent = "space-between"; // Add space between buttons
-    buttonContainer.style.width = "100%"; // Occupy the full width
-
-    // Create Ok button
-    const okButton = document.createElement("button");
-    okButton.textContent = "Ok";
-    okButton.style.padding = "10px";
-    okButton.style.cursor = "pointer";
-    okButton.style.backgroundColor = "#72B550";
-    okButton.style.color = "#000";
-    okButton.style.borderRadius = "45px";
-    okButton.style.border = "5px solid #393939";
-    okButton.style.width = "100px"; // Set a fixed width
-    okButton.style.fontSize = "18px"; // Set the font size
-    okButton.style.fontWeight = "bold"; // Make the font bold
-
-    // Add click event to Ok button
-    okButton.onclick = () => {
-      // Handle the Ok button logic here
-      console.log("Ok button clicked");
-
-      // Redirect to the /playlist page
-      window.location.href = "/playlist";
-
-      // Close the create alert
-      document.body.removeChild(createAlertDiv);
-      document.body.removeChild(createOverlay);
-    };
-
-    // Create Cancel button
-    const cancelButton = document.createElement("button");
-    cancelButton.textContent = "Cancel";
-    cancelButton.style.padding = "10px";
-    cancelButton.style.cursor = "pointer";
-    cancelButton.style.backgroundColor = "#E04F5F";
-    cancelButton.style.color = "#000";
-    cancelButton.style.borderRadius = "45px";
-    cancelButton.style.border = "5px solid #393939";
-    cancelButton.style.width = "100px"; // Set a fixed width
-    cancelButton.style.fontSize = "18px"; // Set the font size
-    cancelButton.style.fontWeight = "bold"; // Make the font bold
-
-    // Add click event to Cancel button
-    cancelButton.onclick = () => {
-      // Handle the Cancel button logic here
-      console.log("Cancel button clicked");
-
-      // Close the create alert
-      document.body.removeChild(createAlertDiv);
-      document.body.removeChild(createOverlay);
-    };
-
-    // Append Ok and Cancel buttons to the button container
-    buttonContainer.appendChild(okButton);
-    buttonContainer.appendChild(cancelButton);
-
-    // Append message, button container, and Cancel button to the create alert container
-    createAlertDiv.appendChild(message);
-    createAlertDiv.appendChild(buttonContainer);
-
-    // Append the create alert container to the body
-    document.body.appendChild(createAlertDiv);
-  };
 
   return (
     <>
@@ -645,9 +542,16 @@ const PlaylistPage = () => {
                 <div className="text-center">
                   <ListGroup className="fs-5 overflow-auto">
                     {recommendations.map((song, key) => (
-                      <ListGroup.Item key={key} action>
-                        {song}
-                      </ListGroup.Item>
+                      <SongItem
+                        extractTrackID={extractTrackID}
+                        search = {search}
+                        getRecommendation={getRecommendation}
+                        key={key}
+                        songName={song}
+                        setPlaylist={setPlaylist}
+                        recommendations={recommendations}
+                        setRecommendations={setRecommendations}
+                      />
                     ))}
                   </ListGroup>
                 </div>
