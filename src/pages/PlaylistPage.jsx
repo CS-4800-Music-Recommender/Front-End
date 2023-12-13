@@ -542,12 +542,17 @@ const PlaylistPage = () => {
                 <div className="text-center">
                   <ListGroup className="fs-5 overflow-auto">
                     {recommendations.map((song, key) => (
-                      // <ListGroup.Item key={key} action onClick={() =>{
-                      //   console.log("Hello")
-                      // }}>
-                      //   {song}
-                      // </ListGroup.Item>
-                      <SongItem key={key} songName={song} playList={playlist} setPlaylist={setPlaylist} recommendations={recommendations} setRecommendations = {setRecommendations} />
+                      <SongItem
+                        extractTrackID={extractTrackID}
+                        search = {search}
+                        getRecommendation={getRecommendation}
+                        key={key}
+                        songName={song}
+                        playList={playlist}
+                        setPlaylist={setPlaylist}
+                        recommendations={recommendations}
+                        setRecommendations={setRecommendations}
+                      />
                     ))}
                   </ListGroup>
                 </div>
