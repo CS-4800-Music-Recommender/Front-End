@@ -21,7 +21,7 @@ const LogoutButton = () => {
                 as={Link}
                 to="/"
                 className="my-3 p-3 fs-1 w-50"
-                onClick={() => logout()}
+                onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
               >
                 Logout
               </Button>
