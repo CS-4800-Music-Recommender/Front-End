@@ -1,17 +1,23 @@
 import { ListGroup } from "react-bootstrap/esm";
 import PropTypes from "prop-types";
 
-
-
-const SongItem = ({ songName, itemKey, playList, setPlaylist, recommendations, setRecommendations, getRecommendation, extractTrackID, search }) => {
-    console.log("songName", songName)
+const SongItem = ({
+    songName,
+    itemKey,
+    setPlaylist,
+    recommendations,
+    setRecommendations,
+    getRecommendation,
+    extractTrackID,
+    search,
+}) => {
     const handleClick = async (e) => {
         e.preventDefault();
-        setPlaylist((prevList) => [...prevList, songName])
-        setRecommendations(recommendations.filter((song) => song !== songName))
-        const trackData = await search(songName, "track")
-        const trackID = extractTrackID(trackData, "track")
-        await getRecommendation(trackID, "track")
+        setPlaylist((prevList) => [...prevList, songName]);
+        setRecommendations(recommendations.filter((song) => song !== songName));
+        const trackData = await search(songName, "track");
+        const trackID = extractTrackID(trackData, "track");
+        await getRecommendation(trackID, "track");
     };
 
     return (
@@ -20,8 +26,6 @@ const SongItem = ({ songName, itemKey, playList, setPlaylist, recommendations, s
         </ListGroup.Item>
     );
 };
-
-export default SongItem
 
 SongItem.propTypes = {
     itemKey: PropTypes.string.isRequired,
@@ -35,3 +39,4 @@ SongItem.propTypes = {
     setPlaylist: PropTypes.func.isRequired,
 };
 
+export default SongItem;

@@ -548,7 +548,6 @@ const PlaylistPage = () => {
                         getRecommendation={getRecommendation}
                         key={key}
                         songName={song}
-                        playList={playlist}
                         setPlaylist={setPlaylist}
                         recommendations={recommendations}
                         setRecommendations={setRecommendations}
