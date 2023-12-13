@@ -146,7 +146,9 @@ const PlaylistPage = () => {
     );
     const data = await response.json();
     data.tracks.forEach((track) => {
-      setRecommendations((prevList) => [...prevList, track.name]);
+      console.log(track.artists[0].name)
+      const recName = `${track.name} - ${track.artists[0].name}`
+      setRecommendations((prevList) => [...prevList, recName]);
     });
   };
 
