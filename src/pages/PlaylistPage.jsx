@@ -9,7 +9,6 @@ import {
 } from "react-bootstrap";
 import logo from "../images/splashscreen/bpm-logo.png";
 import { Link } from "react-router-dom";
-import { List } from "react-bootstrap-icons";
 import { ListGroup } from "react-bootstrap/esm";
 import { useEffect, useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
@@ -26,15 +25,6 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useRef } from "react";
-
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBTUuFCEWK78XM31h-bqOVw-DfEiGy74as",
-//   authDomain: "cs-4800.firebaseapp.com",
-//   projectId: "cs-4800",
-//   storageBucket: "cs-4800.appspot.com",
-//   messagingSenderId: "255169053476",
-//   appId: "1:255169053476:web:de84c4f972abf63cea69b1",
-// };
 const firebaseConfig = {
   apiKey: "AIzaSyDjJXiSe8NLbQmIEQ1Jp0bJt0nvmpfsqgY",
   authDomain: "test-db-4c9b3.firebaseapp.com",
@@ -181,113 +171,6 @@ const PlaylistPage = () => {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-  };
-
-  //Hambuger menu alert box************************************************
-  const customAlert = () => {
-    // Array of items to list
-    const itemList = playlist;
-
-    // Create overlay
-    const overlay = document.createElement("div");
-    overlay.style.position = "fixed";
-    overlay.style.top = "0";
-    overlay.style.left = "0";
-    overlay.style.width = "100%";
-    overlay.style.height = "100%";
-    overlay.style.background = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black background
-    overlay.style.zIndex = "1000"; // Z-index should be lower than the alert container
-    document.body.appendChild(overlay);
-
-    // Create alert container
-    const alertDiv = document.createElement("div");
-    alertDiv.style.position = "fixed";
-    alertDiv.style.zIndex = "1001"; // Higher z-index than the overlay
-    alertDiv.style.left = "50px"; // Margin from the left side
-    alertDiv.style.top = "50px"; // Margin from the top
-    alertDiv.style.width = "300px"; // Set alert window size to 300px
-    alertDiv.style.backgroundColor = "#484848"; // Background color of the alert container
-    alertDiv.style.padding = "20px";
-    alertDiv.style.border = "2px solid #000"; // Border around the alert container
-    alertDiv.style.border = "5px solid #393939"; // Border around the import alert container
-    alertDiv.style.display = "flex";
-    alertDiv.style.flexDirection = "column";
-    alertDiv.style.alignItems = "center"; // Center the content horizontally
-    alertDiv.style.justifyContent = "center"; // Center the content vertically
-
-    // Create header
-    const header = document.createElement("h2");
-    header.textContent = "Saved Playlists";
-    header.style.textAlign = "center";
-    header.style.color = "#FFF"; // Set header text color
-    header.style.marginBottom = "20px";
-    header.style.fontWeight = "bold"; // Make the font bold
-
-    // Create close button (X)
-    const closeButton = document.createElement("span");
-    closeButton.innerHTML = "&times;"; // "x" character for the close button
-    closeButton.style.position = "absolute";
-    closeButton.style.top = "10px";
-    closeButton.style.right = "10px";
-    closeButton.style.fontSize = "20px";
-    closeButton.style.cursor = "pointer";
-
-    // Add click event to close the alert
-    closeButton.onclick = () => {
-      document.body.removeChild(alertDiv);
-      document.body.removeChild(overlay);
-    };
-
-    // Append the close button and header to the alert container
-    alertDiv.appendChild(closeButton);
-    alertDiv.appendChild(header);
-
-    // Create item list
-    const listContainer = document.createElement("ul");
-    listContainer.style.listStyleType = "none";
-    listContainer.style.padding = "0";
-
-    // Populate the item list
-    for (let i = 0; i < itemList.length; i++) {
-      const listItem = document.createElement("li");
-      listItem.textContent = itemList[i];
-      listItem.style.marginBottom = "10px";
-      listItem.style.color = "#fff"; // Set text color
-      listItem.style.fontSize = "16px"; // Set font size
-      listItem.style.fontWeight = "bold"; // Make the font bold
-      listContainer.appendChild(listItem);
-    }
-
-    // Create logout button
-    const logoutButton = document.createElement("button");
-    logoutButton.textContent = "Logout";
-    logoutButton.style.padding = "10px";
-    logoutButton.style.cursor = "pointer";
-    logoutButton.style.backgroundColor = "#E04F5F";
-    logoutButton.style.color = "#000";
-    logoutButton.style.borderRadius = "1px";
-    logoutButton.style.border = "5px solid #000";
-    logoutButton.style.width = "100%"; // Span the width of the alert container
-    logoutButton.style.marginTop = "20px";
-    logoutButton.style.fontSize = "18px"; // Set the font size
-    logoutButton.style.fontWeight = "bold"; // Make the font bold
-
-    // Add click event to logout button
-    logoutButton.onclick = () => {
-      // Handle logout logic here
-      console.log("Logout button clicked");
-
-      // Close the alert
-      document.body.removeChild(alertDiv);
-      document.body.removeChild(overlay);
-    };
-
-    // Append the item list and logout button to the alert container
-    alertDiv.appendChild(listContainer);
-    alertDiv.appendChild(logoutButton);
-
-    // Append the alert container to the body
-    document.body.appendChild(alertDiv);
   };
 
   // Import playlist alert box*****************************************
