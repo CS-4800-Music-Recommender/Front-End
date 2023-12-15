@@ -46,7 +46,6 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Splashscreen />} />
-            <Route path="/test" element={<Test />} />
             <Route path="/playlist" element={<PlaylistPage />} />
           </Routes>
         </BrowserRouter>
